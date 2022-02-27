@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "neohowiebot"
+version = "0.1.0"
+description = ""
+authors = ["Nick Parisi <nickparisi@pm.me>"]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+orjson = "^3.6.7"
+aiodns = "^3.0.0"
+brotlipy = "^0.7.0"
+cchardet = "^2.1.7"
+python-dotenv = "^0.19.2"
+boto3 = "^1.21.6"
+py-cord = {path = "../../dev/pycord", extras = ["voice"]}
+
+[tool.poetry.dev-dependencies]
+pytest = "^5.2"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
