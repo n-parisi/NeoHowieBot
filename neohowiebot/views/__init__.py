@@ -1,5 +1,6 @@
 import discord
 import neohowiebot.modals as modals
+from neohowiebot.services import play_clip
 
 
 class ClipCreatedView(discord.ui.View):
@@ -11,16 +12,16 @@ class ClipCreatedView(discord.ui.View):
 
     @discord.ui.button(label="Replay", style=discord.ButtonStyle.primary)
     async def replay(self, button: discord.ui.Button, interaction: discord.Interaction):
-        print("Replay pressed")
+        await interaction.response.edit_message(view=self)
+        if interaction.user.voice:
+            await play_clip(interaction.user.voice.channel, 'tmp')
 
     @discord.ui.button(label="Save", style=discord.ButtonStyle.green)
     async def save(self, button: discord.ui.Button, interaction: discord.Interaction):
-        print("Save pressed")
         await interaction.response.send_modal(modals.SaveClipModal())
 
     @discord.ui.button(label="Edit", style=discord.ButtonStyle.red)
     async def edit(self, button: discord.ui.Button, interaction: discord.Interaction):
-        print("Edit pressed")
         await interaction.response.send_modal(
             modals.EditClipModal(self.creation_inputs, self.view_creation_interaction))
 
@@ -52,15 +53,15 @@ class DelayCreatedView(discord.ui.View):
 
     @discord.ui.button(label="Replay", style=discord.ButtonStyle.primary)
     async def replay(self, button: discord.ui.Button, interaction: discord.Interaction):
-        print("Replay pressed")
+        await interaction.response.edit_message(view=self)
+        if interaction.user.voice:
+            await play_clip(interaction.user.voice.channel, 'tmp')
 
     @discord.ui.button(label="Save", style=discord.ButtonStyle.green)
     async def save(self, button: discord.ui.Button, interaction: discord.Interaction):
-        print("Save pressed")
         await interaction.response.send_modal(modals.SaveClipModal())
 
     @discord.ui.button(label="Edit", style=discord.ButtonStyle.red)
     async def edit(self, button: discord.ui.Button, interaction: discord.Interaction):
-        print("Edit pressed")
         await interaction.response.send_modal(
             modals.CreateDelayModal(self.creation_inputs, self.view_creation_interaction))

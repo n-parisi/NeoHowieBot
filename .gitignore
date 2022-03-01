@@ -2,3 +2,5 @@
 *.env
 tests
 *__pycache__
+resources/
+dep/
