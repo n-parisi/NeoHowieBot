@@ -4,6 +4,7 @@ from discord.ext import commands
 import os
 from neohowiebot.modals import ClipCreationModal, CreateDelayModal
 from neohowiebot.services import file_service, play_clip
+from neohowiebot.views import PlayerView
 
 GUILD_ID = int(os.getenv("GUILD_ID"))
 
@@ -35,7 +36,7 @@ class BotCommands(commands.Cog):
                    clip: Option(str, 'Pick a clip', autocomplete=clip_search)):
         """Play a clip"""
         selection = clip if clip else 'random'
-        if selection not in file_service.get_clips():
+        if (selection not in file_service.get_clips()) & (selection != 'random'):
             await ctx.respond(f'{selection} is not a valid clip', ephemeral=True)
         else:
             user = ctx.interaction.user
@@ -43,19 +44,7 @@ class BotCommands(commands.Cog):
                 await ctx.respond(f'{ctx.user.display_name} played {selection}')
                 await play_clip(user.voice.channel, selection)
 
-    # TODO: For MVP:
-    #   1. [DONE] Delay modal
-    #   2. [DONE] Actual files
-    #   3. [DONE] Playback
-    #   4. [DONE] Create and replay
-    #   5. [DONE] Save clips
-    #   6. [DONE] Create delay
-    #   6. [DONE] Validators
-    #   7. Docker-ify the application (Podman time?) w/ runDocker.sh script (no docker-compose)
-    # TODO: Future:
-    #   1. Stats / Database
-    #   2. Player command (Not sure how to do this one unless can ignore a button)
-    #   3. Way to list all clips
-    #   4. Better way to unstuck the voice client
-    #   5. Get start time from yt link
-    #   6. Allow 'random' in delay
+    @slash_command(name="player", guild_ids=[GUILD_ID])
+    async def player(self, ctx: discord.ApplicationContext):
+        """Create a player"""
+        await ctx.interaction.response.send_message(content='Press play button for a random clip', view=PlayerView())

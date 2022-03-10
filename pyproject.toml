@@ -12,9 +12,9 @@ brotlipy = "^0.7.0"
 cchardet = "^2.1.7"
 python-dotenv = "^0.19.2"
 boto3 = "^1.21.6"
-py-cord = {path = "dep/pycord", extras = ["voice"]}
 yt-dlp = "^2022.2.4"
 pydub = "^0.25.1"
+py-cord = {version = "2.0.0b5", allow-prereleases = true, extras = ["voice"]}
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
